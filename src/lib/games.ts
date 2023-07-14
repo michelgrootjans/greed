@@ -7,6 +7,10 @@ class Game {
 
 const games: Game[] = []
 
-export const  createGame = (gameId: string) => {
+export const createGame = (gameId: string): void => {
     games.push(new Game(gameId))
+};
+
+export const gameCount = (): number => {
+    return games.length;
 };
