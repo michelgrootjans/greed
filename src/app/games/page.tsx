@@ -1,28 +1,30 @@
 'use client'
 
 import {useRouter} from 'next/navigation'
-import {createGame, gameCount} from "@/lib/games";
+import {createGame} from "@/lib/games";
 import {useEffect, useState} from "react";
+
+const fetchData = async () => {
+    const data = await fetch('/api/games');
+    const json = await data.json();
+    console.log({data: json})
+
+    return json.games
+}
 
 export default function Page() {
     const [numberOfGames, setNumberOfGames] = useState('')
 
-    useEffect(() => {
-        const getData = async () => {
-            const response = await fetch('/api/games');
-            const data = await response.json();
-            console.log({data})
-
-            return data.games
-        }
-        setNumberOfGames(getData())
+    const getNumberOfGames = () => {
+        setNumberOfGames(fetchData())
         return () => {}
-    }, [])
+    };
+    
+    useEffect(getNumberOfGames, [])
 
     const router = useRouter()
-    let games = gameCount()
+
     const onClick = async () => {
-        games = gameCount();
         const gameId = '4';
         createGame(gameId);
         await fetch('/api/games', {method: 'post', body: {gameId}})
