@@ -2,16 +2,30 @@
 
 import {useRouter} from 'next/navigation'
 import {createGame, gameCount} from "@/lib/games";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function Page() {
-    const router = useRouter()
-    const games = gameCount();
+    const [numberOfGames, setNumberOfGames] = useState('')
 
+    useEffect(() => {
+        const getData = async () => {
+            const response = await fetch('/api/games');
+            const data = await response.json();
+            console.log({data})
+
+            return data.games
+        }
+        setNumberOfGames(getData())
+        return () => {}
+    }, [])
+
+    const router = useRouter()
+    let games = gameCount()
     const onClick = async () => {
+        games = gameCount();
         const gameId = '4';
         createGame(gameId);
-        await fetch('/api/games', {method: 'post', body: { gameId } })
+        await fetch('/api/games', {method: 'post', body: {gameId}})
         router.push(`/games/${gameId}`);
     };
 
@@ -20,7 +34,7 @@ export default function Page() {
             <button type="button" onClick={onClick}>
                 Create New Game
             </button>
-            There are {games} current games
+            There are {numberOfGames} current games
         </main>
     )
 }
