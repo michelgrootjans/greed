@@ -1,13 +1,22 @@
-import {gameCount} from "@/lib/games";
+'use client'
 
-export default async function Page() {
+import {useEffect, useState} from "react";
+import {fetchNumberOfGames} from "@/app/games/games-api";
 
-    const games = gameCount();
+export default function Page() {
+    const [numberOfGames, setNumberOfGames] = useState('')
+
+    const getNumberOfGames = () => {
+        setNumberOfGames(fetchNumberOfGames())
+        return () => {}
+    };
+
+    useEffect(getNumberOfGames, [])
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             This is the new game
-            There are {games} current games
+            There are {numberOfGames} current games
         </main>
     )
 };

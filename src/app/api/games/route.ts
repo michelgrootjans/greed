@@ -17,6 +17,6 @@ export async function POST(request: NextRequest, {params}: {params: {slug: strin
     createGame("5")
 
     console.log({ request, params: params, games })
-    return NextResponse.json({ request, params: params, games });
+    return NextResponse.json({});
 }
 
