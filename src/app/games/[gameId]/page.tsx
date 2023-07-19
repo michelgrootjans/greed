@@ -7,7 +7,7 @@ export default function Page() {
     const [numberOfGames, setNumberOfGames] = useState('')
 
     const getNumberOfGames = () => {
-        setNumberOfGames(fetchNumberOfGames())
+        fetchNumberOfGames().then(n => setNumberOfGames(n))
         return () => {}
     };
 

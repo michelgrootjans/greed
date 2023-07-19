@@ -9,7 +9,7 @@ export default function Page() {
     const [numberOfGames, setNumberOfGames] = useState('')
 
     const getNumberOfGames = () => {
-        setNumberOfGames(fetchNumberOfGames())
+        fetchNumberOfGames().then(n => setNumberOfGames(n))
         return () => {}
     };
     
@@ -19,7 +19,7 @@ export default function Page() {
 
     const onClick = async () => {
         const gameId = uuid();
-        await fetch('/api/games', {method: 'post', body: {gameId}})
+        await fetch('/api/games', {method: 'post', body: JSON.stringify({gameId})})
         router.push(`/games/${gameId}`);
     };
 
