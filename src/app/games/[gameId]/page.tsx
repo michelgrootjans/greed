@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import {fetchNumberOfGames} from "@/app/games/games-api";
 
 export default function Page() {
+    console.log("GET /games/{id}")
+
     const [numberOfGames, setNumberOfGames] = useState('')
 
     const getNumberOfGames = () => {

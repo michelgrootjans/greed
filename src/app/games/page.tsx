@@ -3,9 +3,11 @@
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation'
 import { v4 as uuid } from 'uuid';
-import {fetchNumberOfGames} from "./games-api";
+import {createGame, fetchNumberOfGames} from "./games-api";
 
 export default function Page() {
+    console.log("GET /games")
+
     const [numberOfGames, setNumberOfGames] = useState('')
 
     const getNumberOfGames = () => {
@@ -19,7 +21,7 @@ export default function Page() {
 
     const onClick = async () => {
         const gameId = uuid();
-        await fetch('/api/games', {method: 'post', body: JSON.stringify({gameId})})
+        await createGame({gameId})
         router.push(`/games/${gameId}`);
     };
 
